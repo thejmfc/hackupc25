@@ -11,7 +11,7 @@
 </head>
 <body>
     <main>
-        <div class="app-container">
+        <div class="response-container">
             <h1>Travel Recommendations</h1>
 
             <!-- Display group code -->
@@ -25,9 +25,9 @@
                 <h2 id="city">{{ recommendations["city"] }}</h2>
                 <h3>[{{ recommendations["airport"]}}]</h3>
                 <p>{{ recommendations["outbound"] }} &rarr; {{ recommendations["inbound"] }}</p>
-                <p>Current Temperature: <br> {{ recommendations["temperature"] }} &deg; C</p>
+                <p>Expected Average Temperature: <br> {{ recommendations["temperature"] }} &deg; C</p>
         
-                <h3>Example itinerary:</h2>
+                <h3>Example itinerary:</h3>
                 {% for i in range(recommendations["itinerary"]|length) %}
                     <p id="itinerary-item">{{ recommendations["itinerary"][i] }}</p>
                 {% endfor %}
