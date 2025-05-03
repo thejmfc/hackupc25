@@ -60,32 +60,46 @@ def display_recommendations():
         personal_data = data.get("original_data", {})  # Extract the values
         recommendations = data.get("recommendations", {})
 
+        print(f"Personal Data: {personal_data}")
+        print(f"Recommendations: {recommendations}")
 
         # Handle missing recommendations
-        if not recommendations:
+        if not recommendations or "outbound" not in recommendations or "inbound" not in recommendations:
+            print(f"Error in recommendations: {recommendations}")
             return render_template("display.html", error="No recommendations available for the provided group code.")
 
-        # Mock flight details (replace with dynamic data if needed)
-        flight_details = {
-            'outbound': {
-                'carriers': ['Ryanair UK Ltd.', 'Airline 2'],
-                'dep_time': '645',
-                'arr_time': '2245',
-                'day_offset': 0
-            },
-            'inbound': {
-                'carriers': ['Icelandair'],
-                'dep_time': '2340',
-                'arr_time': '1140',
-                'day_offset': 2
-            },
-            'price': 458.88
-        }
+        # Extract flight details
+        flight_details = []
+        for i in range(len(personal_data)):
+            # Validate input data
+            if "airport" not in personal_data[i]:
+                print(f"Error: Missing 'airport' in personal_data[{i}]")
+                continue
+            
+            try:
+                flight_info = skyscanner.run(
+                    personal_data[i]["airport"],
+                    recommendations["outbound"],
+                    recommendations["airport"],
+                    recommendations["inbound"],
+                    recommendations["locale"],
+                    recommendations["home_currency"]
+                )
+                print(flight_info)
+                flight_details.append(flight_info)
+            except Exception as e:
+                print(f"Error fetching flight info for personal_data[{i}]: {e}")
+
+        # After the loop
+        if not flight_details:
+            flight_details.append({"error": "No flight details available at the moment."})
 
         return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
     except Exception as e:
         return render_template("display.html", error=f"An error occurred: {str(e)}")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
