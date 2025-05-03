@@ -28,7 +28,13 @@ def index():
 def form():
     match request.method:
         case "POST":
-            entry = database.FormEntry.from_json(json.dumps(request.json))
+            entry = database.FormEntry(name=request.form.get("name"),
+                                       phone_number=request.form.get("phone_number"),
+                                       group_code=request.form.get("group_code"),
+                                       airport=request.form.get("airport"),
+                                       length=int(request.form.get("length")),
+                                       date=request.form.get("date"),
+                                       prefs=request.form.get("prefs").split("\n"))
             entry.save()
             return jsonify(json.loads(entry.to_json()))
         case "GET":
