@@ -2,6 +2,8 @@ import database, json
 
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
+
+import skyscanner
 from gemini import fetch_travel_recommendations
 # from skyscanner import run
 import urllib.request, json
@@ -21,12 +23,7 @@ def index():
             flight_details = []
 
             for i in range (len(personal_data)):
-                flight_details.append({'outbound':
-                                      {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245',
-                                       'day_offset': 0},
-                                  'inbound':
-                                      {'carriers': ['Icelandair'], 'dep_time': '2340', 'arr_time': '1140', 'day_offset': 2},
-                                  'price': 458.88})
+                flight_details.append(skyscanner.run(personal_data[i].airport, recommendations.outbound, recommendations.airport, recommendations.inbound, recommendations.locale, recommendations.currency))
 
             return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
@@ -50,24 +47,39 @@ def form():
 
 @app.route("/recommendations")
 def display_recommendations():
-    group_code = "sheff@upc"
-    recommendations = fetch_travel_recommendations(group_code)
-    
-    # If no recommendations are received, display an error message
-    if not recommendations:
-        recommendations = {"error": "No recommendations available for the provided group code."}
+    try:
+        group_code = "sheff@upc"
+        data = fetch_travel_recommendations(group_code)  # Get the dictionary
 
-    # Render the recommendations in display.html
-
-    flight_details = {'outbound':
-                          {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245',
-                           'day_offset': 0},
-                      'inbound':
-                          {'carriers': ['Icelandair'], 'dep_time': '2340', 'arr_time': '1140', 'day_offset': 2},
-                      'price': 458.88}
+        personal_data = data.get("original_data", {})  # Extract the values
+        recommendations = data.get("recommendations", {})
 
 
-    return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
+        # Handle missing recommendations
+        if not recommendations:
+            return render_template("display.html", error="No recommendations available for the provided group code.")
+
+        # Mock flight details (replace with dynamic data if needed)
+        flight_details = {
+            'outbound': {
+                'carriers': ['Ryanair UK Ltd.', 'Airline 2'],
+                'dep_time': '645',
+                'arr_time': '2245',
+                'day_offset': 0
+            },
+            'inbound': {
+                'carriers': ['Icelandair'],
+                'dep_time': '2340',
+                'arr_time': '1140',
+                'day_offset': 2
+            },
+            'price': 458.88
+        }
+
+        return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
+
+    except Exception as e:
+        return render_template("display.html", error=f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
     app.run(debug=True)
