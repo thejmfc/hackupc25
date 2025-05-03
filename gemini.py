@@ -44,7 +44,6 @@ def fetch_travel_recommendations(code):
 
     with urllib.request.urlopen(f"https://script.google.com/macros/s/AKfycbzxvYh-HEpUz7xPXdK3S1jZ5pZYbc5D72jRRPUm8g46n4Z7RnqGscVWpkk1UcMqd9QHkg/exec?group_code={code}") as url:
         data = json.load(url)
-        # print(data)
 
     prompt += str(data)
     # print(prompt)
@@ -64,4 +63,6 @@ def fetch_travel_recommendations(code):
     outbound = json_data["outbound"]
     inbound = json_data["inbound"]
 
-    return json_data
+    both_data = [data, json_data]
+
+    return both_data
