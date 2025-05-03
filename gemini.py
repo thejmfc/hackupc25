@@ -2,6 +2,12 @@ import json
 import os
 import urllib.request
 
+from dotenv import load_dotenv
+
+
+# Load environment variables from .env file
+load_dotenv()
+
 # Input prompt for group code
 code = input("Enter group code: \n")
 data = ""
