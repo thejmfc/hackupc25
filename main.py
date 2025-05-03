@@ -13,20 +13,23 @@ def index():
     if request.method == "POST":
         try:
             group_code = request.form.get("groupcode")
-            recommendations = fetch_travel_recommendations(group_code)
+            data = fetch_travel_recommendations(group_code)
 
-            # with urllib.request.urlopen(f"https://script.google.com/macros/s/AKfycbzxvYh-HEpUz7xPXdK3S1jZ5pZYbc5D72jRRPUm8g46n4Z7RnqGscVWpkk1UcMqd9QHkg/exec?group_code={code}") as url:
-            #     data = json.load(url)
+            personal_data = data[0]
+            recommendations = data[1]
 
-            # print(data)
+            flight_details = []
 
-            flight_details = {'outbound':
-                                  {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245',
-                                   'day_offset': 0},
-                              'inbound':
-                                  {'carriers': ['Icelandair'], 'dep_time': '2340', 'arr_time': '1140', 'day_offset': 2},
-                              'price': 458.88}
+            for i in range (len(personal_data)):
+                flight_details.append({'outbound':
+                                      {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245',
+                                       'day_offset': 0},
+                                  'inbound':
+                                      {'carriers': ['Icelandair'], 'dep_time': '2340', 'arr_time': '1140', 'day_offset': 2},
+                                  'price': 458.88})
+
             return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
+
         except Exception as e:
             error_message = str(e)
             return render_template("index.html", error=error_message)
