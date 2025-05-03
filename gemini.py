@@ -1,6 +1,9 @@
 from google import genai
 import urllib.request, json
 
+import database
+
+
 def fetch_travel_recommendations(code):
 
     data = ""
@@ -42,11 +45,10 @@ def fetch_travel_recommendations(code):
     
     """
 
-    with urllib.request.urlopen(f"https://script.google.com/macros/s/AKfycbzxvYh-HEpUz7xPXdK3S1jZ5pZYbc5D72jRRPUm8g46n4Z7RnqGscVWpkk1UcMqd9QHkg/exec?group_code={code}") as url:
-        data = json.load(url)
-
-    prompt += str(data)
-    # print(prompt)
+    for entry in database.FormEntry.objects:
+        if entry.group_code == code:
+            prompt += entry.to_json()
+            prompt += "\n"
 
     client = genai.Client(api_key="AIzaSyBxsgfGzrQuCVOlLPaANHIN2dVfuMm5Hyk")
 
