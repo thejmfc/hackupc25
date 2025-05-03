@@ -47,6 +47,8 @@ def display_recommendations():
                       'inbound':
                           {'carriers': ['Icelandair'], 'dep_time': '2340', 'arr_time': '1140', 'day_offset': 2},
                       'price': 458.88}
+    
+    print(flight_details)
 
     return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
