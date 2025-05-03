@@ -1,5 +1,6 @@
+import json, os, urllib.request
+
 from google import genai
-import urllib.request, json
 
 code = input("Enter group code: \n")
 
@@ -49,7 +50,7 @@ with urllib.request.urlopen(f"https://script.google.com/macros/s/AKfycbzxvYh-HEp
 prompt += str(data)
 # print(prompt)
 
-client = genai.Client(api_key="AIzaSyBxsgfGzrQuCVOlLPaANHIN2dVfuMm5Hyk")
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
 response = client.models.generate_content(
     model="gemini-2.0-flash", contents=prompt).text
