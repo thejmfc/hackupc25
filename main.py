@@ -55,7 +55,7 @@ def form():
 @app.route("/recommendations")
 def display_recommendations():
     try:
-        group_code = "sheff@upc"
+        group_code = "test"
         data = fetch_travel_recommendations(group_code)  # Get the dictionary
 
         personal_data = data.get("original_data", {})  # Extract the values
