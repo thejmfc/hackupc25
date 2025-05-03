@@ -1,6 +1,10 @@
 import json, os, urllib.request
 
+from dotenv import load_dotenv
 from google import genai
+
+# Load environment variables from .env file
+load_dotenv()
 
 code = input("Enter group code: \n")
 
