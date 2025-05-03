@@ -3,27 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" type="text/css">
     <title>Recommendations</title>
 </head>
 <body>
-    <h1>Travel Recommendations</h1>
+    <main>
+        <div class="app-container">
+            <h1>Travel Recommendations</h1>
 
-    <!-- Display group code -->
-    {% if group_code %}
-        <p><strong>Group Code:</strong> {{ group_code }}</p>
-    {% endif %}
-
-    <!-- Display recommendations -->
-    {% if recommendations %}
-        <ul>
-            {% for key, value in recommendations.items() %}
-                <li><strong>{{ key }}:</strong> {{ value }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No recommendations available.</p>
-    {% endif %}
-
-    <a href="/">Back to Home</a>
+            <!-- Display group code -->
+            {% if group_code %}
+                <p><strong>Group Code:</strong> {{ group_code }}</p>
+            {% endif %}
+        
+            <!-- Display recommendations -->
+            <h3>We recommend...</h3>
+            {% if recommendations %}
+                <h2 id="city">{{ recommendations["city"] }}</h2>
+                <h3>[{{ recommendations["airport"]}}]</h3>
+                <p>{{ recommendations["outbound"] }} &rarr; {{ recommendations["inbound"] }}</p>
+                <p>Current Temperature: <br> {{ recommendations["temperature"] }} &deg; C</p>
+        
+                <h3>Example itinerary:</h2>
+                {% for i in range(recommendations["itinerary"]|length) %}
+                    <p>{{ recommendations["itinerary"][i] }}</p>
+                {% endfor %}
+        
+            {% else %}
+                <p>No recommendations available.</p>
+            {% endif %}
+        
+            <a href="/">Back to Home</a>
+        </div>
+    </main>
 </body>
 </html>

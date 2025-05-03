@@ -9,10 +9,11 @@
     margin: 0;
     font-family: "Cal Sans", Arial, Helvetica;
     font-size: 24px;
+    text-align: center;
 }
 
 main {
-    background-image: url("/public/bg_pattern.png");
+    background-image: url("../public/bg_pattern.png");
     background-repeat: repeat;
     height: 100dvh;
     width: 100dvw;
@@ -22,7 +23,7 @@ main {
     flex-direction: column;
 }
 
-#app-container {
+.app-container {
     background-color: var(--background);
     max-height: 600px;
     padding: 50px;
@@ -44,7 +45,8 @@ h1 {
 h3 {
     text-align: center;
     letter-spacing: 5px;
-    margin-bottom: 3dvh;
+    margin-bottom: 2dvh;
+    margin-top: 2dvh;
 }
 
 form {
@@ -53,6 +55,12 @@ form {
     justify-content: center;
     align-items: center;
     padding-top: 3dvh;
+}
+
+#city {
+    color: var(--secondary);
+    font-size: 64px;
+    letter-spacing: 5px;
 }
 
 #submit_button {
