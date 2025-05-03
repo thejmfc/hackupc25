@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page</title>
+    <style>
+        :root {
+            --primary: #D36135;  /* Rust */
+            --secondary: #6A994E;  /* Green */
+            --background: #F2E8CF;  /* Beige */
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: var(--background); /* Use beige background */
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80dvw;
+            color: var(--primary); /* Use rust for text */
+        }
+
+        .plane-container {
+            width: 30dvh;
+            height: 30dvh;
+            position: relative;
+            animation: plane-movement 2s infinite ease-in-out, plane-bobbing 1s infinite alternate;
+        }
+
+        .plane {
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+        }
+
+        .plane > img {
+            height: 300px;
+            width: 300px;
+        }
+
+        @keyframes plane-movement {
+            0%, 100% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(20px) translateY(-10px);
+            }
+        }
+
+        @keyframes plane-bobbing {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes shadow-movement {
+            0%, 100% {
+                transform: translateX(0) translateY(15px) scale(1.2, 0.6);
+            }
+            50% {
+                transform: translateX(20px) translateY(5px) scale(1.2, 0.6);
+            }
+        }
+
+        @keyframes shadow-fade {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.1;
+            }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            animation: text-fade 1s infinite alternate;
+            color: var(--primary); /* Use rust for text */
+        }
+
+        @keyframes text-fade {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .progress-bar {
+            margin-top: 30px;
+            width: 250px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 10px;
+            background-color: var(--secondary); /* Use green for progress bar fill */
+            width: 0%;
+            border-radius: 5px;
+            animation: progress-animation 2s infinite linear;
+        }
+
+        @keyframes progress-animation {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .completed-text {
+            margin-top: 30px;
+            font-size: 20px;
+            color: var(--primary); /* Use rust for text */
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="plane-container">
+            <div class="plane">
+                <img src="/public/plane-svgrepo-com.svg" alt="Plane Icon">
+            </div>
+        </div>
+        <div class="loading-text">Loading...</div>
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
+        <div class="completed-text">Completed!</div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const progressBarFill = document.querySelector('.progress-bar-fill');
+            const loadingText = document.querySelector('.loading-text');
+            const completedText = document.querySelector('.completed-text');
+
+            // Simulate loading
+            setTimeout(() => {
+                progressBarFill.style.animation = 'none';
+                progressBarFill.style.width = '100%';
+                loadingText.style.display = 'none';
+                completedText.style.display = 'block';
+
+                // You can add a delay before redirecting or performing other actions
+                setTimeout(() => {
+                    // window.location.href = 'your-destination.html';
+                }, 1000);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
