@@ -12,10 +12,22 @@
 }
 
 main {
-    background-color: var(--background);
+    background-image: url("/public/bg_pattern.png");
+    background-repeat: repeat;
     height: 100dvh;
     width: 100dvw;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#app-container {
+    background-color: var(--background);
+    max-height: 600px;
+    padding: 50px;
+    display: flex;
+    border-radius: 50px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -26,13 +38,13 @@ h1 {
     font-size: 72px;
     text-align: center;
     letter-spacing: 5px;
-    margin-bottom: 3dvh;
+    margin-bottom: 2dvh;
 }
 
 h3 {
     text-align: center;
     letter-spacing: 5px;
-    margin-bottom: 10dvh;
+    margin-bottom: 3dvh;
 }
 
 form {
@@ -40,6 +52,7 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 3dvh;
 }
 
 #submit_button {
@@ -53,7 +66,7 @@ form {
     height: 10dvh;
     font-size: 36px;
     border-radius: 40px;
-    margin-top: 50px;
+    margin-top: 30px;
     border: none;
     margin-bottom: 3dvh;
     transition: 0.3s;

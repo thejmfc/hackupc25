@@ -1,6 +1,5 @@
-import json, os, urllib.request
-
 from google import genai
+import json, os, urllib.request
 
 code = input("Enter group code: \n")
 
