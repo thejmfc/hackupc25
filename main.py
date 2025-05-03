@@ -17,13 +17,39 @@ def index():
             group_code = request.form.get("groupcode")
             data = fetch_travel_recommendations(group_code)
 
-            personal_data = data[0]
-            recommendations = data[1]
+            personal_data = data.get("original_data", {})  # Extract the values
+            recommendations = data.get("recommendations", {})
 
+            if not recommendations or "outbound" not in recommendations or "inbound" not in recommendations:
+                print(f"Error in recommendations: {recommendations}")
+                return render_template("display.html",
+                                       error="No recommendations available for the provided group code.")
+
+            # Extract flight details
             flight_details = []
+            for i in range(len(personal_data)):
+                # Validate input data
+                if "airport" not in personal_data[i]:
+                    print(f"Error: Missing 'airport' in personal_data[{i}]")
+                    continue
 
-            for i in range (len(personal_data)):
-                flight_details.append(skyscanner.run(personal_data[i].airport, recommendations.outbound, recommendations.airport, recommendations.inbound, recommendations.locale, recommendations.currency))
+                try:
+                    flight_info = skyscanner.run(
+                        personal_data[i]["airport"],
+                        recommendations["outbound"],
+                        recommendations["airport"],
+                        recommendations["inbound"],
+                        recommendations["locale"],
+                        recommendations["home_currency"]
+                    )
+                    print(flight_info)
+                    flight_details.append(flight_info)
+                except Exception as e:
+                    print(f"Error fetching flight info for personal_data[{i}]: {e}")
+
+            # After the loop
+            if not flight_details:
+                flight_details.append({"error": "No flight details available at the moment."})
 
             return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
