@@ -1,18 +1,23 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from gemini import fetch_travel_recommendations
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=["GET","POST"])
 def index():
+    if request.method == "POST":
+        try:
+            group_code = request.form.get("groupcode")
+            recommendations = fetch_travel_recommendations(group_code)
+            return render_template("display.html", recommendations=recommendations)
+        except Exception as e:
+            error_message = str(e)
+            return render_template("index.html", error=error_message)
     return render_template("index.html")
 
 @app.route("/recommendations")
 def display_recommendations():
-    # Hardcoding the group code "sheff@upc"
     group_code = "sheff@upc"
-    
-    # Call the function from gemini.py
     recommendations = fetch_travel_recommendations(group_code)
     
     # If no recommendations are received, display an error message
