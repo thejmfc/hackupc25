@@ -28,51 +28,55 @@
                 <p>Expected Average Temperature: <br> {{ recommendations["temperature"] }} &deg; C</p>
         </div>
         <h1>Flight Information</h1>
-        <div class="response-container">
-            <section id="flight-info">
-                <div id="indiv-details">
-                    <div class="direction-info">
-                        <div class="carrier-info">
-                            {% for i in range(flight_details["outbound"]["carriers"]|length) %}
-                                <p class="carriers">{{ flight_details["outbound"]["carriers"][i] }}</p>
-                            {% endfor %}
-                        </div>
-                        <div class="time-info">
-                            <p>{{ flight_details["outbound"]["dep_time"]}} &rarr; {{ flight_details["outbound"]["arr_time"]}}
-                                {% if flight_details["outbound"]["day_offset"] != 0 %}
-                                    {% if flight_details["outbound"]["day_offset"] > 0 %}
-                                        +{{ flight_details["outbound"]["day_offset"]}}
-                                    {% else %}
-                                        {{ flight_details["outbound"]["day_offset"]}}
+        {% for flight in flight_details %}
+            <div class="response-container">
+                <section id="flight-info">
+                    <div id="indiv-details">
+                        <div class="direction-info">
+                            <h3>Outbound</h3>
+                            <div class="carrier-info">
+                                {% for carrier in flight.outbound.carriers %}
+                                    <p class="carriers">{{ carrier }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="time-info">
+                                <p>{{ flight.outbound.dep_time }} &rarr; {{ flight.outbound.arr_time }}
+                                    {% if flight.outbound.day_offset != 0 %}
+                                        {% if flight.outbound.day_offset > 0 %}
+                                            +{{ flight.outbound.day_offset }}
+                                        {% else %}
+                                            {{ flight.outbound.day_offset }}
+                                        {% endif %}
                                     {% endif %}
-                                {% endif %}
-                            </p>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="direction-info">
-                        <div class="carrier-info">
-                            {% for i in range(flight_details["inbound"]["carriers"]|length) %}
-                                <p class="carriers">{{ flight_details["inbound"]["carriers"][i] }}</p>
-                            {% endfor %}
-                        </div>
-                        <div class="time-info">
-                            <p>{{ flight_details["inbound"]["dep_time"]}} &rarr; {{ flight_details["inbound"]["arr_time"]}}
-                                {% if flight_details["inbound"]["day_offset"] != 0 %}
-                                    {% if flight_details["inbound"]["day_offset"] > 0 %}
-                                        +{{ flight_details["inbound"]["day_offset"]}}
-                                    {% else %}
-                                        {{ flight_details["inbound"]["day_offset"]}}
+                        <div class="direction-info">
+                            <h3>Inbound</h3>
+                            <div class="carrier-info">
+                                {% for carrier in flight.inbound.carriers %}
+                                    <p class="carriers">{{ carrier }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="time-info">
+                                <p>{{ flight.inbound.dep_time }} &rarr; {{ flight.inbound.arr_time }}
+                                    {% if flight.inbound.day_offset != 0 %}
+                                        {% if flight.inbound.day_offset > 0 %}
+                                            +{{ flight.inbound.day_offset }}
+                                        {% else %}
+                                            {{ flight.inbound.day_offset }}
+                                        {% endif %}
                                     {% endif %}
-                                {% endif %}
-                            </p>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="price-info">
+                            <p>{{ recommendations.home_currency }} {{ flight.price }}</p>
                         </div>
                     </div>
-                    <div class="price-info">
-                        <p>{{ recommendations["home_currency"] }} {{ flight_details["price"] }}</p>
-                    </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
+        {% endfor %}
         <h1>Example Itinerary</h1>
         <div class="response-container">
             {% for i in range(recommendations["itinerary"]|length) %}
