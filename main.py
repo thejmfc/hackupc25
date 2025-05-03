@@ -11,7 +11,13 @@ def index():
         try:
             group_code = request.form.get("groupcode")
             recommendations = fetch_travel_recommendations(group_code)
-            return render_template("display.html", recommendations=recommendations)
+            flight_details = {'outbound':
+                                  {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245',
+                                   'day_offset': 0},
+                              'inbound':
+                                  {'carriers': ['Icelandair'], 'dep_time': '2340', 'arr_time': '1140', 'day_offset': 2},
+                              'price': 458.88}
+            return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
         except Exception as e:
             error_message = str(e)
             return render_template("index.html", error=error_message)
@@ -41,12 +47,12 @@ def display_recommendations():
     # Render the recommendations in display.html
 
     flight_details = {'outbound':
-                          {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245', 'day_offset': 0},
+                          {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245',
+                           'day_offset': 0},
                       'inbound':
                           {'carriers': ['Icelandair'], 'dep_time': '2340', 'arr_time': '1140', 'day_offset': 2},
                       'price': 458.88}
-    
-    print(flight_details)
+
 
     return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
