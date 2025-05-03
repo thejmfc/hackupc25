@@ -17,6 +17,8 @@ class FormEntry(Document):
         length (int):         Desired length of trip in days
     """
 
+    meta = {"collection": "forms"}
+
     # Document field definitions
     timestamp: datetime = DateTimeField(required=True)
     group_code: str = StringField(required=True)

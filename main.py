@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+
+import database
 from gemini import fetch_travel_recommendations
 
 app = Flask(__name__)
@@ -14,6 +16,18 @@ def index():
             error_message = str(e)
             return render_template("index.html", error=error_message)
     return render_template("index.html")
+
+@app.route("/form", methods=["GET","POST"])
+def form():
+    match request.method:
+        case "POST":
+            entry = database.FormEntry.from_json(request.json)
+            return jsonify(entry.to_json())
+        case "GET":
+            entries = database.FormEntry.objects.all()
+            return jsonify(entries=[e.to_json() for e in entries])
+
+    return jsonify(message="Invalid request method"), 405
 
 @app.route("/recommendations")
 def display_recommendations():
