@@ -19,6 +19,7 @@ def index():
 
             personal_data = data[0]
             recommendations = data[1]
+            print(f"Recs: {recommendations}")
 
             flight_details = []
 
@@ -60,6 +61,7 @@ def display_recommendations():
         personal_data = data.get("original_data", {})  # Extract the values
         recommendations = data.get("recommendations", {})
 
+        print(f"Recs display: {recommendations}")
 
         # Handle missing recommendations
         if not recommendations:

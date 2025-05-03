@@ -29,7 +29,7 @@
   .app-container,
   .response-container {
     background-color: var(--background);
-    max-width: 70dvw;
+    width: 50dvw;
     padding: 50px;
     display: flex;
     border-radius: 50px;
@@ -37,9 +37,9 @@
     justify-content: center;
     flex-direction: column;
   }
-  
+
   .app-container {
-    max-height: 600px;
+    margin-bottom: 5dvh;
   }
   
   .response-container {
@@ -80,10 +80,24 @@
     align-items: center;
     padding-top: 3dvh;
   }
+
+  #form-title {
+    color: var(--primary);
+    font-size: 72px;
+    letter-spacing: 5px;
+    margin-bottom: 2dvh;
+  }
   
-  #label {
+  label {
     display: block;
     padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  input, textarea {
+    height: 30%;
+    border-radius: 20px;
+    border: none;
   }
   
   #groupcode {
@@ -94,7 +108,7 @@
   }
   
   /* Button Styles */
-  #submit_button {
+  .submit_button {
     color: var(--background);
     background-color: var(--primary);
     display: flex;
@@ -110,7 +124,7 @@
     transition: 0.3s;
   }
   
-  #submit_button:hover {
+  .submit_button:hover {
     border-radius: 20px;
     cursor: pointer;
     background-color: var(--secondary);
