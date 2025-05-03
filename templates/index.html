@@ -14,7 +14,31 @@
         <div class="app-container">
             <h1>Wanderlust</h1>
             <h3>Getting the trip out of the group chat</h3>
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfSbLZ-_hYhiqypK0tdgUgEB5c7g7aemI_oGnm3BanNu3FigA/viewform?embedded=true" width="640" height="1310" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            <form action="/form" method="POST">
+                <label for="name">Full name:</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="phone_number">Phone number:</label>
+                <input type="tel" id="phone_number" name="phone_number" required />
+
+                <label for="group_code">Group code:</label>
+                <input type="text" id="group_code" name="group_code" required />
+
+                <label for="airport">Airport IATA code:</label>
+                <input type="text" id="airport" name="airport" maxlength="3" required />
+
+                <label for="length">Trip length:</label>
+                <input type="number" id="length" name="length" min="0" max="365" required />
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required />
+
+                <label for="prefs">Preferences (newline-delimited):</label>
+                <textarea id="prefs" name="prefs"></textarea>
+
+                <input type="submit" id="submit" value="Submit" />
+            </form>
+
             <form action="/" method="POST">
                 <label id="label" for="groupcode">Enter group code:</label>
                 <input type="text" id="groupcode" name="groupcode">
