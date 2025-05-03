@@ -29,7 +29,7 @@
         
                 <h3>Example itinerary:</h2>
                 {% for i in range(recommendations["itinerary"]|length) %}
-                    <p>{{ recommendations["itinerary"][i] }}</p>
+                    <p id="itinerary-item">{{ recommendations["itinerary"][i] }}</p>
                 {% endfor %}
         
             {% else %}
