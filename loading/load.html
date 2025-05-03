@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
+    <title>Finding Trip</title>
     <style>
         :root {
             --primary: #D36135;  /* Rust */
             --secondary: #6A994E;  /* Green */
             --background: #F2E8CF;  /* Beige */
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "Cal Sans", Arial, Helvetica;
+            font-size: 24px;
         }
 
         body {
@@ -66,24 +76,6 @@
             }
         }
 
-        @keyframes shadow-movement {
-            0%, 100% {
-                transform: translateX(0) translateY(15px) scale(1.2, 0.6);
-            }
-            50% {
-                transform: translateX(20px) translateY(5px) scale(1.2, 0.6);
-            }
-        }
-
-        @keyframes shadow-fade {
-            0%, 100% {
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 0.1;
-            }
-        }
-
         .loading-text {
             margin-top: 20px;
             font-size: 24px;
@@ -100,43 +92,7 @@
                 opacity: 0.7;
             }
         }
-
-        .progress-bar {
-            margin-top: 30px;
-            width: 250px;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 10px;
-            background-color: var(--secondary); /* Use green for progress bar fill */
-            width: 0%;
-            border-radius: 5px;
-            animation: progress-animation 2s infinite linear;
-        }
-
-        @keyframes progress-animation {
-            0% {
-                width: 0%;
-            }
-            100% {
-                width: 100%;
-            }
-        }
-
-        .completed-text {
-            margin-top: 30px;
-            font-size: 20px;
-            color: var(--primary); /* Use rust for text */
-            display: none;
-        }
+        
     </style>
 </head>
 <body>
@@ -146,32 +102,7 @@
                 <img src="/public/plane-svgrepo-com.svg" alt="Plane Icon">
             </div>
         </div>
-        <div class="loading-text">Loading...</div>
-        <div class="progress-bar">
-            <div class="progress-bar-fill"></div>
-        </div>
-        <div class="completed-text">Completed!</div>
+        <div class="loading-text">Finding your trip...</div>
     </div>
-
-    <script>
-        window.addEventListener('load', () => {
-            const progressBarFill = document.querySelector('.progress-bar-fill');
-            const loadingText = document.querySelector('.loading-text');
-            const completedText = document.querySelector('.completed-text');
-
-            // Simulate loading
-            setTimeout(() => {
-                progressBarFill.style.animation = 'none';
-                progressBarFill.style.width = '100%';
-                loadingText.style.display = 'none';
-                completedText.style.display = 'block';
-
-                // You can add a delay before redirecting or performing other actions
-                setTimeout(() => {
-                    // window.location.href = 'your-destination.html';
-                }, 1000);
-            }, 2000);
-        });
-    </script>
 </body>
 </html>
