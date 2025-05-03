@@ -121,4 +121,3 @@ def run(dep_airport, dd, arr_airport, rd, locale, currency):
             return json_output
 
 
-print(run("MAN", "2025-08-21", "JFK", "2025-08-24", "en-GB", "GBP"))
