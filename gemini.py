@@ -1,12 +1,62 @@
 import json
-import os
 import urllib.request
 
+from datetime import datetime
 from dotenv import load_dotenv
 
 
 # Load environment variables from .env file
 load_dotenv()
+
+
+class GeminiResponse:
+    """
+    Class wrapper for the JSON responses returned by Gemini.
+
+    Attributes:
+        city (str):          Name of the destination city recommended by Gemini
+        airport (str):       IATA code of the destination airport
+        outbound (datetime): Datetime of the outbound flight
+        inbound (datetime):  Datetime of the inbound flight
+        length (int):        Length of the trip in days
+        itinerary (list):    List of strings detailing the itinerary for each day
+        temperature (int):   Average temperature in Celsius at the time of the trip
+        home_currency (str): Currency code for the destination country
+        locale (str):        Locale code for the destination city
+    """
+
+    def __init__(self,
+                 city: str,
+                 airport: str,
+                 outbound: datetime,
+                 inbound: datetime,
+                 length: int,
+                 itinerary: list[str],
+                 temperature: int,
+                 home_currency: str,
+                 locale: str):
+        self.city: str = city
+        self.airport: str = airport
+        self.outbound: datetime = outbound
+        self.inbound: datetime = inbound
+        self.length: int = length
+        self.itinerary: list[str] = itinerary
+        self.temperature: int = temperature
+        self.home_currency: str = home_currency
+        self.locale: str = locale
+
+    @classmethod
+    def from_json(cls, data: dict):
+        return cls(city=data.get("city"),
+                   airport=data.get("airport"),
+                   outbound=datetime.fromisoformat(data.get("outbound")),
+                   inbound=datetime.fromisoformat(data.get("inbound")),
+                   length=data.get("length", 0),
+                   itinerary=data.get("itinerary", []),
+                   temperature=data.get("temperature", 0),
+                   home_currency=data.get("home_currency"),
+                   locale=data.get("locale"))
+
 
 # Input prompt for group code
 code = input("Enter group code: \n")
