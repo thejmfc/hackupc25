@@ -17,6 +17,7 @@ main {
     background-repeat: repeat;
     height: 100dvh;
     width: 100dvw;
+    /* padding: 10dvh 0; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,6 +27,16 @@ main {
 .app-container {
     background-color: var(--background);
     max-height: 600px;
+    max-width: 70dvw;
+    padding: 50px;
+    display: flex;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.response-container {
+    background-color: var(--background);
     max-width: 70dvw;
     padding: 50px;
     display: flex;
