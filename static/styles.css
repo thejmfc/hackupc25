@@ -24,8 +24,6 @@
     justify-content: center;
     flex-direction: column;
   }
-
-
   
   .app-container,
   .response-container {
@@ -121,3 +119,44 @@
   img {
     height: 100px;
   }
+
+/* Flight Detail Style */
+#flight-info {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+#indiv-details {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.direction-info {
+    background-color: aliceblue;
+    border: solid;
+    border-radius: 5px;
+    display: flex;
+    width: 45%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.carrier-info {
+    min-width: 40%;
+}
+
+.time-info {
+    min-width: 60%;
+}
+
+.direction-info > p {
+    font-size: 16px;
+}
+
+#headers {
+    display: flex;
+    justify-content: space-around;
+}
