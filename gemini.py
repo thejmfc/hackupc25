@@ -59,7 +59,6 @@ def fetch_travel_recommendations(code):
 
     json_data = json.loads(clean)
 
-    print(json_data)
 
     dest_airport = json_data["airport"]
     outbound = json_data["outbound"]
