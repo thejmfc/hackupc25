@@ -3,6 +3,8 @@ import database, json
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from gemini import fetch_travel_recommendations
+# from skyscanner import run
+import urllib.request, json
 
 app = Flask(__name__)
 
@@ -12,6 +14,12 @@ def index():
         try:
             group_code = request.form.get("groupcode")
             recommendations = fetch_travel_recommendations(group_code)
+
+            # with urllib.request.urlopen(f"https://script.google.com/macros/s/AKfycbzxvYh-HEpUz7xPXdK3S1jZ5pZYbc5D72jRRPUm8g46n4Z7RnqGscVWpkk1UcMqd9QHkg/exec?group_code={code}") as url:
+            #     data = json.load(url)
+
+            # print(data)
+
             flight_details = {'outbound':
                                   {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245',
                                    'day_offset': 0},

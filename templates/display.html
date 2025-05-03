@@ -11,8 +11,8 @@
 </head>
 <body>
     <main>
+        <h1>Travel Recommendations</h1>
         <div class="response-container">
-            <h1>Travel Recommendations</h1>
 
             <!-- Display group code -->
             {% if group_code %}
@@ -27,6 +27,7 @@
                 <p>{{ recommendations["outbound"] }} &rarr; {{ recommendations["inbound"] }}</p>
                 <p>Expected Average Temperature: <br> {{ recommendations["temperature"] }} &deg; C</p>
         </div>
+        <h1>Flight Information</h1>
         <div class="response-container">
             <section id="flight-info">
                 <div id="headers">
@@ -67,8 +68,8 @@
                 </div>
             </section>
         </div>
+        <h1>Example Itinerary</h1>
         <div class="response-container">
-            <h3>Example Itinerary:</h3>
             {% for i in range(recommendations["itinerary"]|length) %}
                 <p id="itinerary-item">{{ recommendations["itinerary"][i] }}</p>
             {% endfor %}

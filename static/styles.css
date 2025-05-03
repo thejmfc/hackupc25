@@ -17,6 +17,7 @@
   main {    
     background-image: url("bg_pattern.png");
     background-repeat: repeat;
+    padding-top: 5dvh;
     min-height: 100dvh;
     width: 100dvw;
     display: flex;
@@ -48,7 +49,7 @@
   
   /* Text Styles */
   h1 {
-    color: var(--primary);
+    color: var(--background);
     font-size: 72px;
     letter-spacing: 5px;
     margin-bottom: 2dvh;
