@@ -25,7 +25,14 @@ def display_recommendations():
         recommendations = {"error": "No recommendations available for the provided group code."}
 
     # Render the recommendations in display.html
-    return render_template("display.html", recommendations=recommendations)
+
+    flight_details = {'outbound':
+                          {'carriers': ['Ryanair UK Ltd.', 'Airline 2'], 'dep_time': '645', 'arr_time': '2245', 'day_offset': 0},
+                      'inbound':
+                          {'carriers': ['Icelandair'], 'dep_time': '2340', 'arr_time': '1140', 'day_offset': 2},
+                      'price': 458.88}
+
+    return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
 if __name__ == "__main__":
     app.run(debug=True)
