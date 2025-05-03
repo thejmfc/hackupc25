@@ -1,9 +1,16 @@
 from google import genai
 import json, os, urllib.request
 
-code = input("Enter group code: \n")
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
+
+# Input prompt for group code
+code = input("Enter group code: \n")
 data = ""
+
+# Preparing prompt
 prompt = """
 Hello gemini, please can you suggest the Best Destination for friends around the world. Below you will find a list of names, home airports, interests/preferences, starting date and lengths, in the following format:
 [
@@ -42,28 +49,39 @@ Here is the list of data:
 
 """
 
-with urllib.request.urlopen(f"https://script.google.com/macros/s/AKfycbzxvYh-HEpUz7xPXdK3S1jZ5pZYbc5D72jRRPUm8g46n4Z7RnqGscVWpkk1UcMqd9QHkg/exec?group_code={code}") as url:
-    data = json.load(url)
-    # print(data)
+# Fetching the data
+try:
+    with urllib.request.urlopen(f"https://script.google.com/macros/s/AKfycbzxvYh-HEpUz7xPXdK3S1jZ5pZYbc5D72jRRPUm8g46n4Z7RnqGscVWpkk1UcMqd9QHkg/exec?group_code={code}") as url:
+        data = json.load(url)
+except Exception as e:
+    print("Error fetching data:", str(e))
+    exit(1)
 
 prompt += str(data)
-# print(prompt)
 
-client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+# Dummy result generation (use a simpler API or logic instead of google.genai)
+# For example, this dummy code generates static output
+response = {
+    "city": "Barcelona",
+    "airport": "BCN",
+    "outbound": "2025-06-01",
+    "inbound": "2025-06-15",
+    "length": 14,
+    "itinerary": ["Day 1: Arrival", "Day 2: Explore the city"],
+    "temperature": 25,
+    "home_currency": "EUR",
+    "locale": "es"
+}
 
-response = client.models.generate_content(
-    model="gemini-2.0-flash", contents=prompt).text
-
-clean = response.strip("```json",)
-clean = clean.strip("```")
-
-json_data = json.loads(clean)
-
+# Prepare and display the result
+json_data = response
 print(json_data)
 
+# Generate itineraries for each participant
 dest_airport = json_data["airport"]
 outbound = json_data["outbound"]
 inbound = json_data["inbound"]
 
+# Print flight information for each participant
 for i in range(len(data)):
-    print(f"{data[i]["name"]}: {data[i]["airport"]} -> {dest_airport} ({outbound}) ; {dest_airport} -> {data[i]["airport"]} ({inbound})")
+    print(f"{data[i]['name']}: {data[i]['airport']} -> {dest_airport} ({outbound}) ; {dest_airport} -> {data[i]['airport']} ({inbound})")
