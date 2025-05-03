@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+</head>
+<body>
+    <h1>Travel Recommendations</h1>
+
+    <!-- Display group code -->
+    {% if group_code %}
+        <p><strong>Group Code:</strong> {{ group_code }}</p>
+    {% endif %}
+
+    <!-- Display recommendations -->
+    {% if recommendations %}
+        <ul>
+            {% for key, value in recommendations.items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recommendations available.</p>
+    {% endif %}
+
+    <a href="/">Back to Home</a>
+</body>
+</html>
