@@ -1,7 +1,7 @@
 import database, json
 
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 
 import skyscanner
 from gemini import fetch_travel_recommendations
@@ -44,7 +44,8 @@ def form():
                                        date=request.form.get("date"),
                                        prefs=request.form.get("prefs").split("\n"))
             entry.save()
-            return jsonify(json.loads(entry.to_json()))
+            return redirect("/")
+
         case "GET":
             entries = database.FormEntry.objects.all()
             return jsonify(entries=[json.loads(e.to_json()) for e in entries])
