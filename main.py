@@ -46,6 +46,9 @@ def index():
                     print("before flight info")
                     print(flight_info)
                     print("after flight info")
+
+                    flight_info["name"] = personal_data[i]["name"]
+                    flight_info["phone_number"] = personal_data[i]["phone_number"]
                     flight_details.append(flight_info)
                 except Exception as e:
                     print(f"Error fetching flight info for personal_data[{i}]: {e}")
