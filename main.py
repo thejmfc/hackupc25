@@ -24,7 +24,6 @@ def index():
                 print(f"Error in recommendations: {recommendations}")
                 return render_template("display.html",
                                        error="No recommendations available for the provided group code.")
-            
 
             # Extract flight details
             flight_details = []

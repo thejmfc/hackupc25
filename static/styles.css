@@ -149,24 +149,15 @@
     justify-content: space-between;
 }
 
-.direction-info {
+.trip-info {
     background-color: aliceblue;
     border: solid;
     border-radius: 5px;
     display: flex;
-    width: 40%;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-
-.price-info {
-    background-color: aliceblue;
-    border: solid;
-    border-radius: 5px;
+    width: 20%;
     display: flex;
-    width: 10%;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 10px;
 }
@@ -179,6 +170,15 @@
     min-width: 60%;
 }
 
-.direction-info > p {
-    font-size: 16px;
+#headers {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#headers > h2 {
+    min-width: 20%;
+    text-align: center;
+    padding: 10px;
 }

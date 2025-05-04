@@ -37,14 +37,17 @@
                     </div>
                 {% else %}
                     <div id="headers">
-                        <h2>Outbound Flights</h2>
-                        <h2>Inbound Flights</h2>
+                        <h2>Outbound</h2>
+                        <h2>Inbound</h2>
+                        <h2>Price</h2>
+                        <h2>Learn more</h2>
                     </div>
 
                     {% for flight in flight_details %}
                         <div id="indiv-details">
-                            <div class="direction-info">
+                            <div class="trip-info">
                                 <div class="carrier-info">
+                                    <!-- <p>{% flight.name %}</p> -->
                                     {% for carrier in flight["outbound"]["carriers"] %}
                                         <p class="carriers">{{ carrier }}</p>
                                     {% endfor %}
@@ -54,10 +57,11 @@
                                     {% if flight["outbound"]["day_offset"] != 0 %}
                                         <p>+{{ flight["outbound"]["day_offset"] }}</p>
                                     {% endif %}
+                                    <p>MAN &rarr; BCN</p>
                                 </div>
                             </div>
 
-                            <div class="direction-info">
+                            <div class="trip-info">
                                 <div class="carrier-info">
                                     {% for carrier in flight["inbound"]["carriers"] %}
                                         <p class="carriers">{{ carrier }}</p>
@@ -68,11 +72,15 @@
                                     {% if flight["inbound"]["day_offset"] != 0 %}
                                         <p>+{{ flight["inbound"]["day_offset"] }}</p>
                                     {% endif %}
+                                    <p>BCN &rarr; MAN</p>
                                 </div>
                             </div>
 
-                            <div class="price-info">
-                                <p>Price: {{ flight["price"] }} {{ recommendations["home_currency"] }}</p>
+                            <div class="trip-info">
+                                <p>{{ flight["price"] }} {{ recommendations["home_currency"] }}</p>
+                            </div>
+
+                            <div class="trip-info">
                                 <a href="{{ flight['link'] }}" target="_blank">Book Now</a>
                             </div>
                         </div>
