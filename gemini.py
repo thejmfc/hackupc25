@@ -1,8 +1,6 @@
 from google import genai
 import urllib.request, json
-
 import database
-
 
 def fetch_travel_recommendations(code):
     prompt = """
@@ -61,10 +59,10 @@ def fetch_travel_recommendations(code):
 
     json_data = json.loads(clean)
 
+    # dest_airport = json_data["airport"]
+    # outbound = json_data["outbound"]
+    # inbound = json_data["inbound"]
 
-    dest_airport = json_data["airport"]
-    outbound = json_data["outbound"]
-    inbound = json_data["inbound"]
 
     return {
         "original_data": entries,

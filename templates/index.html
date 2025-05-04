@@ -12,7 +12,7 @@
 <body>
     <main>
         <div class="app-container">
-            <h1>Wanderlust</h1>
+            <h1 id="form-title">Wanderlust</h1>
             <h3>Getting the trip out of the group chat</h3>
             <form action="/form" method="POST">
                 <label for="name">Full name:</label>
@@ -33,24 +33,24 @@
                 <label for="date">Date:</label>
                 <input type="date" id="date" name="date" required />
 
-                <label for="prefs">Preferences (newline-delimited):</label>
+                <label for="prefs">Preferences (One item per line):</label>
                 <textarea id="prefs" name="prefs"></textarea>
 
-                <label for="locale">Locale code</label>
-                <input type="text" id="locale" name="locale" required />
-
-                <input type="submit" id="submit" value="Submit" />
+                <input type="submit" class="submit_button" value="Submit" />
             </form>
-
+        </div>
+        <div class="app-container">
             <form action="/" method="POST">
+                <h3>Already have a group planned?</h3>
                 <label id="label" for="groupcode">Enter group code:</label>
                 <input type="text" id="groupcode" name="groupcode">
-                <input id="submit_button" type="submit" value="Take Off">
+                <input class="submit_button" type="submit" value="Take Off">
             </form>
+        </div>
+        <div class="app-container">
             <div class="around">
                 <a href="https://www.skyscanner.net/" target="_blank"><img src="{{ url_for('static', filename='stacked--black.svg') }}" alt="Skyscanner Tag"></a>
             </div>
-
         </div>
     </main>
 </body>

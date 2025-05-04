@@ -24,10 +24,12 @@ def index():
                 print(f"Error in recommendations: {recommendations}")
                 return render_template("display.html",
                                        error="No recommendations available for the provided group code.")
+            
 
             # Extract flight details
             flight_details = []
             for i in range(len(personal_data)):
+                print(personal_data)
                 # Validate input data
                 if "airport" not in personal_data[i]:
                     print(f"Error: Missing 'airport' in personal_data[{i}]")
@@ -42,7 +44,9 @@ def index():
                         recommendations["locale"],
                         recommendations["home_currency"]
                     )
+                    print("before flight info")
                     print(flight_info)
+                    print("after flight info")
                     flight_details.append(flight_info)
                 except Exception as e:
                     print(f"Error fetching flight info for personal_data[{i}]: {e}")
@@ -50,10 +54,11 @@ def index():
             # After the loop
             if not flight_details:
                 flight_details.append({"error": "No flight details available at the moment."})
-
+            print("exit success")
             return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
         except Exception as e:
+            print("exit fail")
             error_message = str(e)
             return render_template("index.html", error=error_message)
     return render_template("index.html")
