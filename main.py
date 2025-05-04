@@ -5,6 +5,8 @@ from flask import Flask, render_template, request, jsonify, redirect
 
 import skyscanner
 from gemini import fetch_travel_recommendations
+
+import texts as twilio
 # from skyscanner import run
 import urllib.request, json
 
@@ -43,13 +45,26 @@ def index():
                         recommendations["locale"],
                         recommendations["home_currency"]
                     )
-                    print("before flight info")
                     print(flight_info)
-                    print("after flight info")
 
                     flight_info["name"] = personal_data[i]["name"]
                     flight_info["phone_number"] = personal_data[i]["phone_number"]
+                    flight_info["home_airport"] = personal_data[i]["airport"]
+                    flight_info["dest_airport"] = recommendations["airport"]
                     flight_details.append(flight_info)
+
+                    # print(flight_info["phone_number"])
+                    # print(flight_info["name"])
+                    # print(group_code)
+                    # print(recommendations["airport"])
+                    # print(f"{flight_info["outbound"]["carriers"]} at {flight_info["outbound"]["dep_time"]}")
+                    # print(f"{flight_info["inbound"]["carriers"]} at {flight_info["inbound"]["dep_time"]}")
+                    # print(flight_info["link"])
+
+                    twilio.send(flight_info["phone_number"], flight_info["name"], group_code,
+                                 recommendations["airport"], f"{flight_info["outbound"]["carriers"]} on {recommendations["outbound"]} at {flight_info["outbound"]["dep_time"]}",
+                                 f"{flight_info["inbound"]["carriers"]} on {recommendations["inbound"]} at {flight_info["inbound"]["dep_time"]}", flight_info["link"])
+
                 except Exception as e:
                     print(f"Error fetching flight info for personal_data[{i}]: {e}")
 
@@ -57,7 +72,7 @@ def index():
             if not flight_details:
                 flight_details.append({"error": "No flight details available at the moment."})
             print("exit success")
-            return render_template("display.html", recommendations=recommendations, flight_details=flight_details, original_data=personal_data)
+            return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
         except Exception as e:
             print("exit fail")
@@ -105,6 +120,7 @@ def display_recommendations():
 
         # Extract flight details
         flight_details = []
+        names = []
         for i in range(len(personal_data)):
             # Validate input data
             if "airport" not in personal_data[i]:
@@ -120,8 +136,17 @@ def display_recommendations():
                     recommendations["locale"],
                     recommendations["home_currency"]
                 )
+                flight_info["name"] = personal_data[i]["name"]
+                flight_info["phone_number"] = personal_data[i]["phone_number"]
+                flight_info["home_airport"] = personal_data[i]["airport"]
                 print(flight_info)
                 flight_details.append(flight_info)
+                twilio.send(flight_info["phone_number"], flight_info["name"], group_code,
+                                 recommendations["airport"], f"{flight_info["outbound"]["carriers"]} on {recommendations["outbound"]} at {flight_info["outbound"]["dep_time"]}",
+                                 f"{flight_info["inbound"]["carriers"]} on {recommendations["inbound"]} at {flight_info["inbound"]["dep_time"]}", flight_info["link"])
+
+                
+                # name, phone number, flight choices
             except Exception as e:
                 print(f"Error fetching flight info for personal_data[{i}]: {e}")
 
@@ -129,7 +154,7 @@ def display_recommendations():
         if not flight_details:
             flight_details.append({"error": "No flight details available at the moment."})
 
-        return render_template("display.html", recommendations=recommendations, flight_details=flight_details, original_data=personal_data)
+        return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
 
     except Exception as e:
         return render_template("display.html", error=f"An error occurred: {str(e)}")

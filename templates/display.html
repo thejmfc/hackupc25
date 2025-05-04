@@ -31,13 +31,6 @@
             <h1>Flights</h1>
             <div class="response-container">
                 <section id="flight-info">
-                    <p>Flying from:</p>
-                    <ul>
-                        {% for entry in original_data %}
-                        <li>{{ entry.airport }}</li>
-                        {% endfor %}
-                    </ul>
-
                     {% if not flight_details or flight_details[0].get("error") %}
                         <div id="no-flights">
                             <h2>No Flights Available</h2>
@@ -54,7 +47,7 @@
                         {% for flight in flight_details %}
                             <div id="indiv-details">
                                 <div class="trip-info">
-                                    <p>Name: {{ flight.name }}</p>
+                                    <p>{{ flight["name"] }}</p>
                                     <div class="carrier-info">
                                         {% for carrier in flight["outbound"]["carriers"] %}
                                             <p class="carriers">{{ carrier }}</p>
@@ -65,11 +58,12 @@
                                         {% if flight["outbound"]["day_offset"] != 0 %}
                                             <p>+{{ flight["outbound"]["day_offset"] }}</p>
                                         {% endif %}
-                                        <p>MAN &rarr; BCN</p>
+                                        <p>{{ flight["home_airport"]}} &rarr; {{ flight["dest_airport"] }}</p>
                                     </div>
                                 </div>
 
                                 <div class="trip-info">
+                                    <p>{{ flight["name"] }}</p>
                                     <div class="carrier-info">
                                         {% for carrier in flight["inbound"]["carriers"] %}
                                             <p class="carriers">{{ carrier }}</p>
@@ -80,7 +74,7 @@
                                         {% if flight["inbound"]["day_offset"] != 0 %}
                                             <p>+{{ flight["inbound"]["day_offset"] }}</p>
                                         {% endif %}
-                                        <p>BCN &rarr; MAN</p>
+                                        <p>{{ flight["dest_airport"] }} &rarr; {{ flight["home_airport"]}}</p>
                                     </div>
                                 </div>
 
