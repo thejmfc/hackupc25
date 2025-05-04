@@ -11,6 +11,11 @@ headers = {
     'x-api-key': API_KEY
 }
 
+def add_leading_zero(inp):
+    if len(inp) == 1:
+        return "0" + inp
+    return inp
+
 def run(dep_airport, dd, arr_airport, rd, locale, currency):
     dep_date = dd.split("-")
     ret_date = rd.split("-")
@@ -84,18 +89,18 @@ def run(dep_airport, dd, arr_airport, rd, locale, currency):
             for carrier in inbound_leg["operatingCarrierIds"]:
                 inbound_carriers.append(carriers[carrier]["name"])
 
-            outbound_dep_time = str(outbound_leg["departureDateTime"]["hour"]) + str(outbound_leg["departureDateTime"]["minute"])
-            outbound_arr_time = str(outbound_leg["arrivalDateTime"]["hour"]) + str(outbound_leg["departureDateTime"]["minute"])
+            outbound_dep_time = add_leading_zero(str(outbound_leg["departureDateTime"]["hour"])) + ":" + add_leading_zero(str(outbound_leg["departureDateTime"]["minute"]))
+            outbound_arr_time = add_leading_zero(str(outbound_leg["arrivalDateTime"]["hour"])) + ":" + add_leading_zero(str(outbound_leg["departureDateTime"]["minute"]))
             outbound_day_offset = outbound_leg["arrivalDateTime"]["day"] - outbound_leg["departureDateTime"]["day"]
             if outbound_day_offset < -5:
                 outbound_day_offset += monthrange(outbound_leg["departureDateTime"]["year"], outbound_leg["departureDateTime"]["month"])[1]
 
-            inbound_dep_time = str(inbound_leg["departureDateTime"]["hour"]) + str(inbound_leg["arrivalDateTime"]["minute"])
-            inbound_arr_time = str(inbound_leg["arrivalDateTime"]["hour"]) + str(inbound_leg["arrivalDateTime"]["minute"])
+            inbound_dep_time = add_leading_zero(str(inbound_leg["departureDateTime"]["hour"])) + ":" + add_leading_zero(str(inbound_leg["arrivalDateTime"]["minute"]))
+            inbound_arr_time = add_leading_zero(str(inbound_leg["arrivalDateTime"]["hour"])) + ":" + add_leading_zero(str(inbound_leg["arrivalDateTime"]["minute"]))
             inbound_day_offset = inbound_leg["arrivalDateTime"]["day"] - inbound_leg["departureDateTime"]["day"]
             if inbound_day_offset < 0:
                 inbound_day_offset += monthrange(inbound_leg["departureDateTime"]["year"], inbound_leg["departureDateTime"]["month"])[1]
-
+            
             price = choice["price"]
             price_amount = float(price["amount"])/1000
 
