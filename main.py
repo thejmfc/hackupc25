@@ -73,7 +73,8 @@ def form():
                                        airport=request.form.get("airport"),
                                        length=int(request.form.get("length")),
                                        date=request.form.get("date"),
-                                       prefs=request.form.get("prefs").split("\n"))
+                                       prefs=request.form.get("prefs").split("\n"),
+                                       locale=request.form.get("locale"))
             entry.save()
             return redirect("/")
 
