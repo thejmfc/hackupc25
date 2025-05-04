@@ -55,7 +55,7 @@ def index():
             if not flight_details:
                 flight_details.append({"error": "No flight details available at the moment."})
             print("exit success")
-            return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
+            return render_template("display.html", recommendations=recommendations, flight_details=flight_details, original_data=personal_data)
 
         except Exception as e:
             print("exit fail")
@@ -127,7 +127,7 @@ def display_recommendations():
         if not flight_details:
             flight_details.append({"error": "No flight details available at the moment."})
 
-        return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
+        return render_template("display.html", recommendations=recommendations, flight_details=flight_details, original_data=personal_data)
 
     except Exception as e:
         return render_template("display.html", error=f"An error occurred: {str(e)}")
