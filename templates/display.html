@@ -20,84 +20,94 @@
             {% endif %}
 
             <!-- Display recommendations -->
-            <h3>We recommend...</h3>
             {% if recommendations %}
+                <h3>We recommend...</h3>
                 <h2 id="city">{{ recommendations["city"] }}</h2>
                 <h3>[{{ recommendations["airport"]}}]</h3>
                 <p>{{ recommendations["outbound"] }} &rarr; {{ recommendations["inbound"] }}</p>
                 <p>Expected Average Temperature: <br> {{ recommendations["temperature"] }} &deg; C</p>
-        </div>
-        <h1>Flights</h1>
-        <div class="response-container">
-            <section id="flight-info">
-                <p>Flying from:</p>
-                <ul>
-                    {% for entry in original_data %}
+            </div>
+
+            <h1>Flights</h1>
+            <div class="response-container">
+                <section id="flight-info">
+                    <p>Flying from:</p>
+                    <ul>
+                        {% for entry in original_data %}
                         <li>{{ entry.airport }}</li>
-                    {% endfor %}
-                </ul>
+                        {% endfor %}
+                    </ul>
 
-                {% if not flight_details or flight_details[0].get("error") %}
-                    <div id="no-flights">
-                        <h2>No Flights Available</h2>
-                        <p>Unfortunately, we couldn't find any flights for your trip at the moment. Please check back later.</p>
-                    </div>
-                {% else %}
-                    <div id="headers">
-                        <h2>Outbound Flights</h2>
-                        <h2>Inbound Flights</h2>
-                    </div>
-
-                    {% for flight in flight_details %}
-                        <div id="indiv-details">
-                            <div class="direction-info">
-                                <div class="carrier-info">
-                                    {% for carrier in flight["outbound"]["carriers"] %}
-                                        <p class="carriers">{{ carrier }}</p>
-                                    {% endfor %}
-                                </div>
-                                <div class="time-info">
-                                    <p>{{ flight["outbound"]["dep_time"] }} &rarr; {{ flight["outbound"]["arr_time"] }}</p>
-                                    {% if flight["outbound"]["day_offset"] != 0 %}
-                                        <p>+{{ flight["outbound"]["day_offset"] }}</p>
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                            <div class="direction-info">
-                                <div class="carrier-info">
-                                    {% for carrier in flight["inbound"]["carriers"] %}
-                                        <p class="carriers">{{ carrier }}</p>
-                                    {% endfor %}
-                                </div>
-                                <div class="time-info">
-                                    <p>{{ flight["inbound"]["dep_time"] }} &rarr; {{ flight["inbound"]["arr_time"] }}</p>
-                                    {% if flight["inbound"]["day_offset"] != 0 %}
-                                        <p>+{{ flight["inbound"]["day_offset"] }}</p>
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                            <div class="price-info">
-                                <p>Price: {{ flight["price"] }} {{ recommendations["home_currency"] }}</p>
-                                <a href="{{ flight['link'] }}" target="_blank">Book Now</a>
-                            </div>
+                    {% if not flight_details or flight_details[0].get("error") %}
+                        <div id="no-flights">
+                            <h2>No Flights Available</h2>
+                            <p>Unfortunately, we couldn't find any flights for your trip at the moment. Please check back later.</p>
                         </div>
-                    {% endfor %}
-                {% endif %}
-            </section>
-        </div>
-        <h1>Itinerary</h1>
-        <div class="response-container">
-            {% for i in range(recommendations["itinerary"]|length) %}
-                <p id="itinerary-item">{{ recommendations["itinerary"][i] }}</p>
-            {% endfor %}
+                    {% else %}
+                        <div id="headers">
+                            <h2>Outbound</h2>
+                            <h2>Inbound</h2>
+                            <h2>Price</h2>
+                            <h2>Learn more</h2>
+                        </div>
+
+                        {% for flight in flight_details %}
+                            <div id="indiv-details">
+                                <div class="trip-info">
+                                    <div class="carrier-info">
+                                        {% for carrier in flight["outbound"]["carriers"] %}
+                                            <p class="carriers">{{ carrier }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="time-info">
+                                        <p>{{ flight["outbound"]["dep_time"] }} &rarr; {{ flight["outbound"]["arr_time"] }}</p>
+                                        {% if flight["outbound"]["day_offset"] != 0 %}
+                                            <p>+{{ flight["outbound"]["day_offset"] }}</p>
+                                        {% endif %}
+                                        <p>MAN &rarr; BCN</p>
+                                    </div>
+                                </div>
+
+                                <div class="trip-info">
+                                    <div class="carrier-info">
+                                        {% for carrier in flight["inbound"]["carriers"] %}
+                                            <p class="carriers">{{ carrier }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="time-info">
+                                        <p>{{ flight["inbound"]["dep_time"] }} &rarr; {{ flight["inbound"]["arr_time"] }}</p>
+                                        {% if flight["inbound"]["day_offset"] != 0 %}
+                                            <p>+{{ flight["inbound"]["day_offset"] }}</p>
+                                        {% endif %}
+                                        <p>BCN &rarr; MAN</p>
+                                    </div>
+                                </div>
+
+                                <div class="trip-info">
+                                    <p>{{ flight["price"] }} {{ recommendations["home_currency"] }}</p>
+                                </div>
+
+                                <div class="trip-info">
+                                    <a href="{{ flight['link'] }}" target="_blank">Book Now</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </section>
+            </div>
+
+            <h1>Itinerary</h1>
+            <div class="response-container">
+                {% for i in range(recommendations["itinerary"]|length) %}
+                    <p id="itinerary-item">{{ recommendations["itinerary"][i] }}</p>
+                {% endfor %}
+            </div>
 
             {% else %}
                 <p>No recommendations available.</p>
             {% endif %}
-
         </div>
+
         <div class="response-container">
             <a href="/">Back to Home</a>
         </div>
