@@ -5,8 +5,6 @@ import database
 
 
 def fetch_travel_recommendations(code):
-
-    data = ""
     prompt = """
     Hello gemini, please can you suggest the Best Destination for friends around the world. Below you will find a list of names, home airports, interests/preferences, starting date and lengths, in the following format:
     [
@@ -45,8 +43,11 @@ def fetch_travel_recommendations(code):
     
     """
 
+    entries = []
+
     for entry in database.FormEntry.objects:
         if entry.group_code == code:
+            entries.append(entry)
             prompt += entry.to_json()
             prompt += "\n"
 
@@ -66,6 +67,6 @@ def fetch_travel_recommendations(code):
     inbound = json_data["inbound"]
 
     return {
-        "original_data": data,
+        "original_data": entries,
         "recommendations": json_data
     }
