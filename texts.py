@@ -3,15 +3,15 @@ import requests
 import time
 
 link_shorten_url = "https://api-ssl.bitly.com/v4/shorten"
-bitly_token = '6c63a6f9ac78118f84ba46923c6e73d95becdb91'
+bitly_token = 'redacted'
 link_shorten_headers = {
     'Authorization': f'Bearer {bitly_token}',
     'Content-Type': 'application/json',
 }
 
 
-uk_sid = 'AC0fe18b3b5f636a3dae5d24f3e10baf9a'
-uk_auth = '8335a04be85ad6717001a70673baf6fc'
+uk_sid = 'redacted'
+uk_auth = 'redacted'
 uk_client = Client(uk_sid, uk_auth)
 uk_from_number = "+447427859438"
 
