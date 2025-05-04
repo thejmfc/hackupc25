@@ -35,7 +35,7 @@ def index():
 
                 try:
                     flight_info = skyscanner.run(
-                        personal_data[i]["airport"],
+                        personal_data[i].airport,
                         recommendations["outbound"],
                         recommendations["airport"],
                         recommendations["inbound"],

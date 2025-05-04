@@ -15,6 +15,7 @@ class FormEntry(Document):
         prefs (list):         List of freeform user preferences, contains info like desired activities, etc
         date (str):           Rough date the user would like the trip to be
         length (int):         Desired length of trip in days
+        locale (str):         Locale code for the destination
     """
 
     meta = {"collection": "forms"}
@@ -28,3 +29,4 @@ class FormEntry(Document):
     prefs: list[str] = ListField(StringField(), required=True)
     date: str = StringField(required=True)
     length: int = IntField(required=True)
+    locale: str = StringField(required=True)

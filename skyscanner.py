@@ -120,4 +120,5 @@ def run(dep_airport, dd, arr_airport, rd, locale, currency):
             }
             return json_output
 
-
+    else:
+        print(response.json())
