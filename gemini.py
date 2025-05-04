@@ -63,6 +63,7 @@ def fetch_travel_recommendations(code):
     # outbound = json_data["outbound"]
     # inbound = json_data["inbound"]
 
+
     return {
         "original_data": entries,
         "recommendations": json_data
