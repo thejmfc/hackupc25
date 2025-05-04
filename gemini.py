@@ -1,9 +1,8 @@
 from google import genai
 import urllib.request, json
+import database
 
 def fetch_travel_recommendations(code):
-
-    data = ""
     prompt = """
     Hello gemini, please can you suggest the Best Destination for friends around the world. Below you will find a list of names, home airports, interests/preferences, starting date and lengths, in the following format:
     [
@@ -42,11 +41,13 @@ def fetch_travel_recommendations(code):
     
     """
 
-    with urllib.request.urlopen(f"https://script.google.com/macros/s/AKfycbzxvYh-HEpUz7xPXdK3S1jZ5pZYbc5D72jRRPUm8g46n4Z7RnqGscVWpkk1UcMqd9QHkg/exec?group_code={code}") as url:
-        data = json.load(url)
+    entries = []
 
-    prompt += str(data)
-    # print(prompt)
+    for entry in database.FormEntry.objects:
+        if entry.group_code == code:
+            entries.append(entry)
+            prompt += entry.to_json()
+            prompt += "\n"
 
     client = genai.Client(api_key="AIzaSyBxsgfGzrQuCVOlLPaANHIN2dVfuMm5Hyk")
 
@@ -63,6 +64,6 @@ def fetch_travel_recommendations(code):
     # inbound = json_data["inbound"]
 
     return {
-        "original_data": data,
+        "original_data": entries,
         "recommendations": json_data
     }
