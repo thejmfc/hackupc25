@@ -31,6 +31,13 @@
             <h1>Flights</h1>
             <div class="response-container">
                 <section id="flight-info">
+                    <p>Flying from:</p>
+                    <ul>
+                        {% for entry in original_data %}
+                        <li>{{ entry.airport }}</li>
+                        {% endfor %}
+                    </ul>
+
                     {% if not flight_details or flight_details[0].get("error") %}
                         <div id="no-flights">
                             <h2>No Flights Available</h2>
