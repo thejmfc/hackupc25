@@ -18,8 +18,9 @@
                 <p><strong>Group Code:</strong> {{ group_code }}</p>
             {% endif %}
 
-            <h3>We recommend...</h3>
+            <!-- Display recommendations -->
             {% if recommendations %}
+                <h3>We recommend...</h3>
                 <h2 id="city">{{ recommendations["city"] }}</h2>
                 <h3>[{{ recommendations["airport"]}}]</h3>
                 <p>{{ recommendations["outbound"] }} &rarr; {{ recommendations["inbound"] }}</p>
@@ -45,7 +46,6 @@
                             <div id="indiv-details">
                                 <div class="trip-info">
                                     <div class="carrier-info">
-                                        <p>{% flight.name %}</p>
                                         {% for carrier in flight["outbound"]["carriers"] %}
                                             <p class="carriers">{{ carrier }}</p>
                                         {% endfor %}
@@ -86,15 +86,18 @@
                     {% endif %}
                 </section>
             </div>
+
             <h1>Itinerary</h1>
             <div class="response-container">
                 {% for i in range(recommendations["itinerary"]|length) %}
                     <p id="itinerary-item">{{ recommendations["itinerary"][i] }}</p>
                 {% endfor %}
             </div>
-        {% else %}
-            <p>No recommendations available.</p>
-        {% endif %}
+
+            {% else %}
+                <p>No recommendations available.</p>
+            {% endif %}
+        </div>
 
         <div class="response-container">
             <a href="/">Back to Home</a>
