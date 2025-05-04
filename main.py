@@ -46,6 +46,9 @@ def index():
                     print("before flight info")
                     print(flight_info)
                     print("after flight info")
+
+                    flight_info["name"] = personal_data[i]["name"]
+                    flight_info["phone_number"] = personal_data[i]["phone_number"]
                     flight_details.append(flight_info)
                 except Exception as e:
                     print(f"Error fetching flight info for personal_data[{i}]: {e}")
@@ -54,7 +57,7 @@ def index():
             if not flight_details:
                 flight_details.append({"error": "No flight details available at the moment."})
             print("exit success")
-            return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
+            return render_template("display.html", recommendations=recommendations, flight_details=flight_details, original_data=personal_data)
 
         except Exception as e:
             print("exit fail")
@@ -126,7 +129,7 @@ def display_recommendations():
         if not flight_details:
             flight_details.append({"error": "No flight details available at the moment."})
 
-        return render_template("display.html", recommendations=recommendations, flight_details=flight_details)
+        return render_template("display.html", recommendations=recommendations, flight_details=flight_details, original_data=personal_data)
 
     except Exception as e:
         return render_template("display.html", error=f"An error occurred: {str(e)}")
