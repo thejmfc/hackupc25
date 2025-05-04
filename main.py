@@ -59,6 +59,7 @@ def index():
 
         except Exception as e:
             print("exit fail")
+            print(e)
             error_message = str(e)
             return render_template("index.html", error=error_message)
     return render_template("index.html")
