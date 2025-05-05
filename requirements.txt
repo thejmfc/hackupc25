@@ -28,7 +28,7 @@ pyasn1==0.6.1
 pyasn1_modules==0.4.2
 pycparser==2.22
 pydantic==2.11.4
-pydantic_core==2.33.2
+pydantic_core==2.34.1
 pymongo==4.12.1
 pyOpenSSL==25.0.0
 python-dotenv==1.1.0
